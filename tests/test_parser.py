@@ -1,92 +1,67 @@
-from parser import parse_puzzle
-from exceptions import InputFormatError, InvalidPuzzleError
 import pytest
 
+from numberlink.io.parser import parse_puzzle
+from numberlink.exceptions import InputFormatError
+from numberlink.domain.position import Position
+
+
 def test_parse_valid_puzzle():
-    text = """4 4
-    A..B
-    ....
-    ....
-    A..B"""
+    text = """hex
+A . .
+. B .
+A . B
+"""
+    puzzle = parse_puzzle(text)
 
-    board = parse_puzzle(text)
-    assert board.height == 4
-    assert board.width == 4
-    assert board.get_cell(0, 0) == 'A'
-    assert board.get_cell(0, 3) == 'B'
-    assert board.get_cell(1, 1) == '.'
+    assert puzzle.geometry_type == "hex"
+    assert puzzle.height == 3
+    assert puzzle.width == 3
+    assert puzzle.get_cell(Position(0, 0)) == "A"
+    assert puzzle.get_cell(Position(1, 1)) == "B"
+    assert puzzle.get_cell(Position(0, 1)) == "."
 
-def test_parse_empty_input():
-    with pytest.raises(InputFormatError):
+
+def test_parse_empty_input_raises_error():
+    with pytest.raises(InputFormatError, match="пуст"):
         parse_puzzle("")
 
-def test_invalid_header():
-    text = """4
-    A..B
-    ....
-    ....
-    A..B"""
-    with pytest.raises(InputFormatError):
+
+def test_parse_without_grid_raises_error():
+    text = "hex"
+    with pytest.raises(InputFormatError, match="Отсутствует поле"):
         parse_puzzle(text)
 
-def test_non_integer_dimensions():
-    text = """x y
-    A..B
-    ....
-    ....
-    A..B"""
-    with pytest.raises(InputFormatError):
+
+def test_parse_ragged_rows_raises_error():
+    text = """hex
+A .
+. B .
+"""
+    with pytest.raises(InputFormatError, match="одинаковую длину"):
         parse_puzzle(text)
 
-def test_negative_dimensions():
-    text = """-4 -4
-    A..B
-    ....
-    ....
-    A..B"""
-    with pytest.raises(InputFormatError):
+
+def test_parse_invalid_symbol_raises_error():
+    text = """hex
+A . .
+. 1 .
+A . B
+"""
+    with pytest.raises(InputFormatError, match="Недопустимый символ"):
         parse_puzzle(text)
 
-def test_invalid_symbol():
-    text = """4 4
-    A..B
-    ....
-    ..@.
-    A..B"""
-    with pytest.raises(InputFormatError):
-        parse_puzzle(text)
 
-def test_label_appears_once():
-    text = """4 4
-    A..B
-    ....
-    ....
-    A..C"""
-    with pytest.raises(InvalidPuzzleError):
-        parse_puzzle(text)
+def test_parse_trims_outer_whitespace():
+    text = """
 
-def test_label_appears_more_than_twice():
-    text = """4 4
-    A..B
-    ....
-    ....
-    A..A"""
-    with pytest.raises(InvalidPuzzleError):
-        parse_puzzle(text)
+hex
+A . .
+. B .
+A . B
 
-def test_wrong_number_of_rows():
-    text = """4 4
-    A..B
-    ....
-    A..B"""
-    with pytest.raises(InputFormatError):
-        parse_puzzle(text)
+"""
+    puzzle = parse_puzzle(text)
 
-def test_wrong_row_length():
-    text = """4 4
-    A..B
-    .....
-    ....
-    A..B"""
-    with pytest.raises(InputFormatError):
-        parse_puzzle(text)
+    assert puzzle.geometry_type == "hex"
+    assert puzzle.height == 3
+    assert puzzle.width == 3

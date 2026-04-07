@@ -13,7 +13,8 @@ class PuzzleValidator:
 
         return dict(endpoints)
 
-    def validate(self, puzzle):
+    def validate_puzzle(self, puzzle):
+
         if not puzzle.cells:
             raise InvalidPuzzleError("Поле пустое")
 
@@ -30,3 +31,6 @@ class PuzzleValidator:
                 raise InvalidPuzzleError(
                     f"Символ '{label}' должен встречаться ровно 2 раза, сейчас: {len(positions)}"
                 )
+def validate_puzzle(puzzle):
+    validator = PuzzleValidator()
+    validator.validate_puzzle(puzzle)

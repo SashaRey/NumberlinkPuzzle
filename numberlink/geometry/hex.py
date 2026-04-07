@@ -18,7 +18,7 @@ class HexGeometry:
 
     def contains(self, position: Position) -> bool:
         """Проверяет, находится ли позиция внутри границ доски"""
-        return self.puzzle.is_inside(position)
+        return position in self.puzzle.cells
     
     def neighbors(self, position: Position) -> list[Position]:
         """Возвращает соседние позиции в шестиугольной сетке"""

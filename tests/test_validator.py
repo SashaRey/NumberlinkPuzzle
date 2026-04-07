@@ -7,6 +7,7 @@ from numberlink.validation import validate_puzzle
 
 
 def make_puzzle(cells, height=3, width=3, geometry_type="hex"):
+    """Вспомогательная функция для создания головоломки с заданными параметрами."""
     return Puzzle(
         cells=cells,
         height=height,
@@ -16,6 +17,7 @@ def make_puzzle(cells, height=3, width=3, geometry_type="hex"):
 
 
 def test_validate_correct_puzzle_passes():
+    """Проверяем, что корректная головоломка проходит валидацию без ошибок."""
     puzzle = make_puzzle(
         {
             Position(0, 0): "A",
@@ -34,6 +36,7 @@ def test_validate_correct_puzzle_passes():
 
 
 def test_validate_empty_field_raises_error():
+    """Проверяем, что пустое поле вызывает ошибку валидации."""
     puzzle = make_puzzle({}, height=0, width=0)
 
     with pytest.raises(InvalidPuzzleError, match="Поле пустое"):
@@ -41,6 +44,7 @@ def test_validate_empty_field_raises_error():
 
 
 def test_validate_unsupported_geometry_raises_error():
+    """Проверяем, что неподдерживаемая геометрия вызывает ошибку валидации."""
     puzzle = make_puzzle(
         {
             Position(0, 0): "A",
@@ -56,6 +60,7 @@ def test_validate_unsupported_geometry_raises_error():
 
 
 def test_validate_no_pairs_raises_error():
+    """Проверяем, что отсутствие пар вызывает ошибку валидации."""
     puzzle = make_puzzle(
         {
             Position(0, 0): ".",
@@ -72,6 +77,7 @@ def test_validate_no_pairs_raises_error():
 
 
 def test_validate_label_occurs_once_raises_error():
+    """Проверяем, что метка, которая встречается 1 раз, вызывает ошибку валидации."""
     puzzle = make_puzzle(
         {
             Position(0, 0): "A",
@@ -88,6 +94,7 @@ def test_validate_label_occurs_once_raises_error():
 
 
 def test_validate_label_occurs_three_times_raises_error():
+    """Проверяем, что метка, которая встречается 3 раза, вызывает ошибку валидации."""
     puzzle = make_puzzle(
         {
             Position(0, 0): "A",

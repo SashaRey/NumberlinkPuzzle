@@ -6,6 +6,7 @@ from numberlink.domain.position import Position
 
 
 def test_parse_valid_puzzle():
+    """Проверяет, что корректный текст головоломки правильно парсится."""
     text = """hex
 A . .
 . B .
@@ -22,17 +23,20 @@ A . B
 
 
 def test_parse_empty_input_raises_error():
+    """Проверяет, что пустой ввод вызывает ошибку."""
     with pytest.raises(InputFormatError, match="пуст"):
         parse_puzzle("")
 
 
 def test_parse_without_grid_raises_error():
+    """Проверяет, что ввод без сетки вызывает ошибку."""
     text = "hex"
     with pytest.raises(InputFormatError, match="Отсутствует поле"):
         parse_puzzle(text)
 
 
 def test_parse_ragged_rows_raises_error():
+    """Проверяет, что строки разной длины вызывают ошибку."""
     text = """hex
 A .
 . B .
@@ -42,6 +46,7 @@ A .
 
 
 def test_parse_invalid_symbol_raises_error():
+    """Проверяет, что недопустимые символы вызывают ошибку."""
     text = """hex
 A . .
 . 1 .
@@ -52,6 +57,7 @@ A . B
 
 
 def test_parse_trims_outer_whitespace():
+    """Проверяет, что лишние пробелы в начале и конце удаляются."""
     text = """
 
 hex

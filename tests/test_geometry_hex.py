@@ -12,6 +12,7 @@ def make_puzzle_3x3():
 
 
 def test_contains_returns_true_for_existing_cell():
+    """Проверяет, что contains возвращает True для существующей ячейки."""
     puzzle = make_puzzle_3x3()
     geometry = HexGeometry(puzzle)
 
@@ -19,6 +20,7 @@ def test_contains_returns_true_for_existing_cell():
 
 
 def test_contains_returns_false_for_missing_cell():
+    """Проверяет, что contains возвращает False для несуществующей ячейки."""
     puzzle = make_puzzle_3x3()
     geometry = HexGeometry(puzzle)
 
@@ -26,6 +28,7 @@ def test_contains_returns_false_for_missing_cell():
 
 
 def test_neighbors_for_top_left_corner():
+    """Проверяет соседей для верхнего левого угла."""
     puzzle = make_puzzle_3x3()
     geometry = HexGeometry(puzzle)
 
@@ -38,6 +41,7 @@ def test_neighbors_for_top_left_corner():
 
 
 def test_neighbors_for_center_cell():
+    """Проверяет соседей для центральной ячейки."""
     puzzle = make_puzzle_3x3()
     geometry = HexGeometry(puzzle)
 

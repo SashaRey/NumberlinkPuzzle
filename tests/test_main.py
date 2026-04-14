@@ -22,16 +22,25 @@ def test_main_prints_found_solution(monkeypatch, capsys):
     monkeypatch.setattr(main_module, "parse_puzzle", lambda text: "puzzle")
     monkeypatch.setattr(main_module, "validate_puzzle", lambda puzzle: None)
     monkeypatch.setattr(main_module, "create_geometry", lambda puzzle: "geometry")
-    monkeypatch.setattr(main_module, "BacktrackingSolver", lambda: DummySolverWithSolution())
-    monkeypatch.setattr(main_module, "render_solution", lambda puzzle, solution: print("RENDERED"))
+    monkeypatch.setattr(
+        main_module, "BacktrackingSolver", lambda: DummySolverWithSolution()
+    )
+    monkeypatch.setattr(
+        main_module, "render_solution", lambda puzzle, solution: print("RENDERED")
+    )
 
     monkeypatch.setattr(
-        main_module, "build_parser",
+        main_module,
+        "build_parser",
         lambda: type(
             "DummyParser",
             (),
-            {"parse_args": lambda self: type("Args", (), {"path": "puzzle.txt", "debug": False})()}
-        )()
+            {
+                "parse_args": lambda self: type(
+                    "Args", (), {"path": "puzzle.txt", "debug": False}
+                )()
+            },
+        )(),
     )
 
     main_module.main()
@@ -48,16 +57,23 @@ def test_main_prints_no_solution(monkeypatch, capsys):
     monkeypatch.setattr(main_module, "parse_puzzle", lambda text: "puzzle")
     monkeypatch.setattr(main_module, "validate_puzzle", lambda puzzle: None)
     monkeypatch.setattr(main_module, "create_geometry", lambda puzzle: "geometry")
-    monkeypatch.setattr(main_module, "BacktrackingSolver", lambda: DummySolverWithoutSolution())
+    monkeypatch.setattr(
+        main_module, "BacktrackingSolver", lambda: DummySolverWithoutSolution()
+    )
     monkeypatch.setattr(main_module, "render_solution", lambda puzzle, solution: None)
 
     monkeypatch.setattr(
-        main_module, "build_parser",
+        main_module,
+        "build_parser",
         lambda: type(
             "DummyParser",
             (),
-            {"parse_args": lambda self: type("Args", (), {"path": "puzzle.txt", "debug": False})()}
-        )()
+            {
+                "parse_args": lambda self: type(
+                    "Args", (), {"path": "puzzle.txt", "debug": False}
+                )()
+            },
+        )(),
     )
 
     main_module.main()
@@ -68,18 +84,24 @@ def test_main_prints_no_solution(monkeypatch, capsys):
 
 def test_main_handles_file_not_found(monkeypatch, capsys):
     """Проверяет, что main правильно обрабатывает ситуацию, когда файл не найден."""
+
     def raise_file_not_found(path):
         raise FileNotFoundError
 
     monkeypatch.setattr(main_module, "load_text", raise_file_not_found)
 
     monkeypatch.setattr(
-        main_module, "build_parser",
+        main_module,
+        "build_parser",
         lambda: type(
             "DummyParser",
             (),
-            {"parse_args": lambda self: type("Args", (), {"path": "missing.txt", "debug": False})()}
-        )()
+            {
+                "parse_args": lambda self: type(
+                    "Args", (), {"path": "missing.txt", "debug": False}
+                )()
+            },
+        )(),
     )
 
     main_module.main()
@@ -98,12 +120,17 @@ def test_main_handles_numberlink_error(monkeypatch, capsys):
     monkeypatch.setattr(main_module, "parse_puzzle", raise_numberlink_error)
 
     monkeypatch.setattr(
-        main_module, "build_parser",
+        main_module,
+        "build_parser",
         lambda: type(
             "DummyParser",
             (),
-            {"parse_args": lambda self: type("Args", (), {"path": "puzzle.txt", "debug": False})()}
-        )()
+            {
+                "parse_args": lambda self: type(
+                    "Args", (), {"path": "puzzle.txt", "debug": False}
+                )()
+            },
+        )(),
     )
 
     main_module.main()

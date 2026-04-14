@@ -8,7 +8,7 @@ class PuzzleValidator:
         endpoints = defaultdict(list)
 
         for pos, value in puzzle.cells.items():
-            if value != '.':
+            if value != ".":
                 endpoints[value].append(pos)
 
         return dict(endpoints)
@@ -19,7 +19,9 @@ class PuzzleValidator:
             raise InvalidPuzzleError("Поле пустое")
 
         if puzzle.geometry_type != "hex":
-            raise InvalidPuzzleError(f"Неподдерживаемая геометрия: {puzzle.geometry_type}")
+            raise InvalidPuzzleError(
+                f"Неподдерживаемая геометрия: {puzzle.geometry_type}"
+            )
 
         endpoints = self.find_endpoints(puzzle)
 
@@ -31,6 +33,8 @@ class PuzzleValidator:
                 raise InvalidPuzzleError(
                     f"Символ '{label}' должен встречаться ровно 2 раза, сейчас: {len(positions)}"
                 )
+
+
 def validate_puzzle(puzzle):
     validator = PuzzleValidator()
     validator.validate_puzzle(puzzle)

@@ -71,6 +71,8 @@ B A
     solutions = solver.solve_all(puzzle, geometry)
 
     assert solutions == []
+
+
 from numberlink.domain.position import Position
 from numberlink.io.parser import parse_puzzle
 from numberlink.geometry.factory import create_geometry

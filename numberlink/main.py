@@ -7,6 +7,7 @@ from numberlink.io.parser import parse_puzzle
 from numberlink.validation import validate_puzzle
 from numberlink.geometry.factory import create_geometry
 from numberlink.solver.backtracking import BacktrackingSolver
+from numberlink.solver.cache import CachedSolver
 from numberlink.render import render_solution, render_graph_solution
 from numberlink.exceptions import NumberlinkError
 
@@ -48,6 +49,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Ограничить максимальное число найденных решений",
     )
 
+    parser.add_argument(
+        "--cache",
+        action="store_true",
+        help="Использовать кэширование решений",
+    )
+
     return parser
 
 
@@ -59,6 +66,7 @@ def main():
         max_solutions = getattr(args, "max_solutions", None)
         graph_view = getattr(args, "graph_view", False)
         color = getattr(args, "color", False)
+        use_cache = getattr(args, "cache", False)
 
         if max_solutions is not None and max_solutions <= 0:
             raise NumberlinkError(
@@ -71,6 +79,9 @@ def main():
 
         geometry = create_geometry(puzzle)
         solver = BacktrackingSolver()
+
+        if use_cache:
+            solver = CachedSolver(solver)
 
         render_fn = render_graph_solution if graph_view else render_solution
 

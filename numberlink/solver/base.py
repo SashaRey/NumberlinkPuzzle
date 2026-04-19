@@ -12,13 +12,19 @@ Solution = dict[str, list[Position]]
 class Solver(ABC):
     @abstractmethod
     def iter_solutions(
-        self, puzzle: Puzzle, geometry: object, max_solutions: int | None = None
+        self,
+        puzzle: Puzzle,
+        geometry: object,
+        max_solutions: int | None = None,
     ) -> Iterator[Solution]:
         """Лениво возвращает найденные решения головоломки."""
         raise
 
     def solve_all(
-        self, puzzle: Puzzle, geometry: object, max_solutions: int | None = None
+        self,
+        puzzle: Puzzle,
+        geometry: object,
+        max_solutions: int | None = None,
     ) -> list[Solution]:
         """Возвращает все найденные решения головоломки."""
         return list(self.iter_solutions(puzzle, geometry, max_solutions))

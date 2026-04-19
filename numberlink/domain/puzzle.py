@@ -17,7 +17,4 @@ class Puzzle:
 
     def is_inside(self, position: Position) -> bool:
         """Проверяет, находится ли позиция внутри границ доски"""
-        return (
-            0 <= position.row < self.height
-            and 0 <= position.column < self.width
-        )
+        return 0 <= position.row < self.height and 0 <= position.column < self.width

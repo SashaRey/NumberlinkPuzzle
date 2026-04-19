@@ -25,7 +25,12 @@ def parse_puzzle(text: str) -> Puzzle:
         for col_idx, symbol in enumerate(row):
             cells[Position(row_idx, col_idx)] = symbol
 
-    return Puzzle(cells=cells, height=height, width=width, geometry_type=geometry_type)
+    return Puzzle(
+        cells=cells,
+        height=height,
+        width=width,
+        geometry_type=geometry_type,
+    )
 
 
 # Вспомогательные функции для парсинга и валидации

@@ -43,6 +43,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--gui",
+        action="store_true",
+        help="Запустить графический интерфейс (GUI)",
+    )
+
+    parser.add_argument(
         "--max-solutions",
         type=int,
         default=None,
@@ -61,6 +67,17 @@ def build_parser() -> argparse.ArgumentParser:
 def main():
     parser = build_parser()
     args = parser.parse_args()
+
+    if getattr(args, "gui", False):
+        try:
+            from numberlink.gui.app import run
+
+            return run()
+        except ImportError as e:
+            print(
+                f"Ошибка загрузки GUI: {e}\nУбедитесь, что установлена библиотека PyQt6."
+            )
+            return
 
     try:
         max_solutions = getattr(args, "max_solutions", None)

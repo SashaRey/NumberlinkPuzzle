@@ -105,6 +105,41 @@ class HexCanvas(QWidget):
             for label, path in self.solution.items():
                 self._draw_path(painter, path, self.get_color(label))
 
+        self._draw_walls(painter)
+
+    def _draw_walls(self, painter: QPainter):
+        walls = getattr(self.puzzle, "walls", set())
+        if not walls:
+            return
+
+        pen = QPen(QColor(255, 50, 50), 6)
+        painter.setPen(pen)
+
+        for wall in walls:
+            wall_list = list(wall)
+            if len(wall_list) == 2:
+                pos1, pos2 = wall_list
+                # For hexes, find the midpoint between centers
+                x1, y1 = self.grid.center(pos1.row, pos1.column)
+                x2, y2 = self.grid.center(pos2.row, pos2.column)
+                # find orthogonal vector for wall drawing
+                dx = x2 - x1
+                dy = y2 - y1
+                # normalize vector
+                length = (dx * dx + dy * dy) ** 0.5
+                if length == 0:
+                    continue
+                nx, ny = dx / length, dy / length
+                # tangent vector
+                tx, ty = -ny, nx
+                cx, cy = (x1 + x2) / 2, (y1 + y2) / 2
+
+                wall_len = self.grid.size * 0.8
+                painter.drawLine(
+                    QPointF(cx - tx * wall_len, cy - ty * wall_len),
+                    QPointF(cx + tx * wall_len, cy + ty * wall_len),
+                )
+
     def _draw_hex(self, painter: QPainter, row: int, col: int, val: str):
         pts = self.grid.polygon(row, col)
         polygon = QPolygonF([QPointF(x, y) for x, y in pts])

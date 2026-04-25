@@ -1,6 +1,6 @@
 import pytest
 
-from numberlink.io.parser import parse_puzzle
+from numberlink.file_io.parser import parse_puzzle
 from numberlink.exceptions import InputFormatError
 from numberlink.domain.position import Position
 

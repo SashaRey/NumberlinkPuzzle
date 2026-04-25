@@ -12,8 +12,8 @@ from PyQt6.QtWidgets import (
     QMessageBox,
 )
 
-from numberlink.io.loader import load_text
-from numberlink.io.parser import parse_puzzle
+from numberlink.file_io.loader import load_text
+from numberlink.file_io.parser import parse_puzzle
 from numberlink.validation import validate_puzzle
 from numberlink.geometry.factory import create_geometry
 from numberlink.solver.backtracking import BacktrackingSolver

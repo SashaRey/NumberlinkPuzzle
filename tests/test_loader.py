@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from numberlink.io.loader import load_text
+from numberlink.file_io.loader import load_text
 
 
 def test_load_text_reads_file(tmp_path):

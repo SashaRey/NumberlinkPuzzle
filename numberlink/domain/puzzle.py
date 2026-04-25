@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from numberlink.domain.position import Position
 
 
@@ -10,6 +10,7 @@ class Puzzle:
     height: int
     width: int
     geometry_type: str
+    walls: frozenset = field(default_factory=frozenset)
 
     def get_cell(self, position: Position) -> str:
         """Возвращает значение в указанной позиции"""

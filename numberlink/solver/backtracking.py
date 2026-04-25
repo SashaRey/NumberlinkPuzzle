@@ -159,7 +159,14 @@ class BacktrackingSolver(Solver):
             result.append(path.copy())
             return
 
+        walls = getattr(
+            geometry.puzzle, "walls", frozenset()
+        ) if hasattr(geometry, "puzzle") else frozenset()
+
         for neighbor in geometry.neighbors(current):
+            if frozenset({current, neighbor}) in walls:
+                continue
+
             if neighbor == target:
                 path.append(neighbor)
                 result.append(path.copy())

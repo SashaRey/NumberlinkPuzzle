@@ -7,7 +7,22 @@ def parse_puzzle(text: str) -> Puzzle:
     lines = _prepare_lines(text)
 
     geometry_type = lines[0]
-    grid_lines = lines[1:]
+    rest_lines = lines[1:]
+
+    grid_lines = []
+    walls = set()
+    for line in rest_lines:
+        if line.startswith("WALL:"):
+            parts = line[5:].strip().split("-")
+            if len(parts) == 2:
+                try:
+                    r1, c1 = map(int, map(str.strip, parts[0].split(",")))
+                    r2, c2 = map(int, map(str.strip, parts[1].split(",")))
+                    walls.add(frozenset({Position(r1, c1), Position(r2, c2)}))
+                except Exception:
+                    pass
+        else:
+            grid_lines.append(line)
 
     if not grid_lines:
         raise InputFormatError("Отсутствует поле")
@@ -30,6 +45,7 @@ def parse_puzzle(text: str) -> Puzzle:
         height=height,
         width=width,
         geometry_type=geometry_type,
+        walls=frozenset(walls)
     )
 
 

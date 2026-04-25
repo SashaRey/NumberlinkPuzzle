@@ -1,5 +1,5 @@
 from numberlink.domain.position import Position
-from numberlink.io.parser import parse_puzzle
+from numberlink.file_io.parser import parse_puzzle
 from numberlink.geometry.factory import create_geometry
 from numberlink.solver.backtracking import BacktrackingSolver
 
@@ -74,7 +74,7 @@ B A
 
 
 from numberlink.domain.position import Position
-from numberlink.io.parser import parse_puzzle
+from numberlink.file_io.parser import parse_puzzle
 from numberlink.geometry.factory import create_geometry
 from numberlink.solver.backtracking import BacktrackingSolver
 

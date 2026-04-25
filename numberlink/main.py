@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import argparse
 
-from numberlink.io.loader import load_text
-from numberlink.io.parser import parse_puzzle
+from numberlink.file_io.loader import load_text
+from numberlink.file_io.parser import parse_puzzle
 from numberlink.validation import validate_puzzle
 from numberlink.geometry.factory import create_geometry
 from numberlink.solver.backtracking import BacktrackingSolver
@@ -73,10 +73,8 @@ def main():
             from numberlink.gui.app import run
 
             return run()
-        except ImportError as e:
-            print(
-                f"Ошибка загрузки GUI: {e}\nУбедитесь, что установлена библиотека PyQt6."
-            )
+        except ImportError:
+            print("Убедитесь, что установлена библиотека PyQt6.")
             return
 
     try:

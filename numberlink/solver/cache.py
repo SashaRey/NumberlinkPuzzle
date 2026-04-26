@@ -59,7 +59,7 @@ class CachedSolver(Solver):
                         continue
 
                     data = json.loads(line)
-                    # Метка того, что решатель дошёл до конца дерева
+                    
                     if data.get("__finished__") is True:
                         is_finished = True
                         continue
